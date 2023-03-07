@@ -59,6 +59,11 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: store,
+    cookie: {
+      httpOnly: false,
+      secure: true,
+      maxAge: 86400000, // One day in milliseconds
+    },
   })
 );
 
