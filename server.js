@@ -61,8 +61,7 @@ app.use(
     saveUninitialized: false,
     store: store,
     cookie: {
-      sameSite: "lax",
-      secure: false,
+      secure: true,
       maxAge: 1000*60*60, // One day in milliseconds
     },
   })
