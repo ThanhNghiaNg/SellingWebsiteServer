@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname));
 app.use(
   cors({
-    origin: true,
+    origin: "https://simple-e-comerce-27271.web.app/",
     credentials: true,
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE", "PATCH"],
   })
@@ -62,7 +62,7 @@ app.use(
     store: store,
     cookie: {
       secure: true,
-      maxAge: 1000*60*60, // One day in milliseconds
+      maxAge: 1000 * 60 * 60, // One day in milliseconds
     },
   })
 );
