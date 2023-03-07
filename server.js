@@ -48,8 +48,12 @@ app.use(express.static(__dirname));
 app.set("trust proxy", 1);
 app.use(
   cors({
-    origin: ["https://simpleecomercewebsite.netlify.app","https://simple-e-comerce-27271.web.app"],
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    origin: [
+      "https://simpleecomercewebsite.netlify.app",
+      "https://simple-e-comerce-27271.web.app",
+      "https://owwi-ecomerce.netlify.app/",
+    ],
+    methods: ["POST", "PUT", "PATCH", "DELETE", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })
 );
@@ -70,8 +74,6 @@ app.use(
     },
   })
 );
-
-
 
 app.use((req, res, next) => {
   if (!req.session.user) {
