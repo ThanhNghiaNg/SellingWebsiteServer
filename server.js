@@ -60,9 +60,9 @@ app.use(
     saveUninitialized: false,
     store: store,
     cookie: {
-      httpOnly: false,
-      secure: true,
+      secure: false,
       maxAge: 86400000, // One day in milliseconds
+      sameSite: "none",
     },
   })
 );
