@@ -48,6 +48,7 @@ app.use(
   cors({
     origin: true,
     credentials: true,
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE", "PATCH"],
   })
 );
 app.use(
@@ -60,9 +61,9 @@ app.use(
     saveUninitialized: false,
     store: store,
     cookie: {
+      sameSite: "lax",
       secure: false,
-      maxAge: 86400000, // One day in milliseconds
-      sameSite: "none",
+      maxAge: 1000*60*60, // One day in milliseconds
     },
   })
 );
