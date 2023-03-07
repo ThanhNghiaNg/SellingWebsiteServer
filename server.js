@@ -43,12 +43,14 @@ const store = new MongoDBStore({
 
 const app = express();
 app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.static(__dirname));
+app.set("trust proxy", 1);
 app.use(
   cors({
-    origin: "https://simpleecomercewebsite.netlify.app",
+    origin: ["https://simpleecomercewebsite.netlify.app","https://simple-e-comerce-27271.web.app"],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE", "PATCH"],
   })
 );
 app.use(
@@ -57,18 +59,19 @@ app.use(
 
 app.use(
   session({
-    secret: "my secret",
-    resave: false,
+    secret: "SESS_SECRET",
     saveUninitialized: false,
+    resave: false,
     store: store,
     cookie: {
+      sameSite: "none",
       secure: true,
       maxAge: 1000 * 60 * 60, // One day in milliseconds
     },
   })
 );
 
-app.set("trust proxy", 1);
+
 
 app.use((req, res, next) => {
   if (!req.session.user) {
