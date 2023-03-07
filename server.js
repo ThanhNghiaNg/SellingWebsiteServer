@@ -51,7 +51,8 @@ app.use(
     origin: [
       "https://simpleecomercewebsite.netlify.app",
       "https://simple-e-comerce-27271.web.app",
-      "https://owwi-ecomerce.netlify.app/",
+      "https://owwi-ecomerce-admin.netlify.app",
+      "https://owwi-ecomerce.netlify.app",
     ],
     methods: ["POST", "PUT", "PATCH", "DELETE", "GET", "OPTIONS", "HEAD"],
     credentials: true,
