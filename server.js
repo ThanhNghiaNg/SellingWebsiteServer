@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname));
 app.use(
   cors({
-    origin: "https://simple-e-comerce-27271.web.app",
+    origin: "https://simple-e-comerce-27271.web.app/",
     credentials: true,
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE", "PATCH"],
   })
