@@ -4,6 +4,9 @@ const authController = require("../controllers/auth");
 const User = require("../models/User");
 const { check, body } = require("express-validator/check");
 const isAuth = require("../middlewares/isAuthUser");
+
+route.get("/authenticated", authController.getAuthenticated);
+
 route.post(
   "/login",
   [

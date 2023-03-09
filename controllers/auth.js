@@ -2,6 +2,14 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator/check");
 
+exports.getAuthenticated = (req, res, next) => {
+  if (!req.session.isLoggedIn) {
+    return res.send({ isLoggedIn: false });
+  } else {
+    return res.send({ isLoggedIn: true });
+  }
+};
+
 exports.postLogin = (req, res, next) => {
   const { email, password, role } = req.body;
   const errors = validationResult(req);

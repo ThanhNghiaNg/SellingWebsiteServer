@@ -33,8 +33,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const MONGODB_URI =
-  "mongodb+srv://owwibookstore:owwibookstore@cluster0.o5luvip.mongodb.net/FUNiXAssignment03?retryWrites=true&w=majority";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 const store = new MongoDBStore({
   uri: MONGODB_URI,
@@ -71,7 +70,7 @@ app.use(
     cookie: {
       sameSite: "none",
       secure: true,
-      maxAge: 1000 * 60 * 60, // One day in milliseconds
+      maxAge: 1000 * 60 * 60 * 24, // One day in milliseconds
     },
   })
 );
