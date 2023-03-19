@@ -33,8 +33,6 @@ route.delete(
   shopController.deleteProductCart
 );
 
-route.get("/user", isAuth, userController.getUserInfomation);
-
 route.post(
   "/order",
   [

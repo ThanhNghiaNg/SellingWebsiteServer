@@ -1,9 +1,11 @@
 const express = require("express");
 const adminController = require("../controllers/admin");
 const productController = require("../controllers/product");
-const isAuthAdmin = require("../middlewares/isAuthAdmin");
-const isAuthConsultant = require('../middlewares/isAuthConsultant')
 const sessionController = require("../controllers/session");
+const userController = require("../controllers/user");
+
+const isAuthAdmin = require("../middlewares/isAuthAdmin");
+const isAuthConsultant = require("../middlewares/isAuthConsultant");
 const { body } = require("express-validator/check");
 const route = express.Router();
 
@@ -60,5 +62,7 @@ route.get("/rooms", isAuthConsultant, sessionController.getRooms);
 route.get("/room/:id", isAuthConsultant, sessionController.getRoomAdmin);
 
 route.patch("/room/:id", isAuthConsultant, sessionController.pushMessageAdmin);
+
+route.get("/users", isAuthAdmin, userController.getAllUser);
 
 module.exports = route;
