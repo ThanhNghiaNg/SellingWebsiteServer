@@ -13,6 +13,8 @@ const shopRoutes = require("./routes/shop");
 const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
 
+require('dotenv').config();
+
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
@@ -34,8 +36,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const MONGODB_URI =
-  "mongodb+srv://owwibookstore:owwibookstore@cluster0.o5luvip.mongodb.net/FUNiXAssignment03?retryWrites=true&w=majority";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 const store = new MongoDBStore({
   uri: MONGODB_URI,
@@ -48,27 +49,28 @@ app.use(express.json());
 app.use(express.static(__dirname));
 app.set("trust proxy", 1);
 
-//UNCOMMENT FOR DEPLOY
-// app.use(
-//   cors({
-//     origin: [
-//       "https://simpleecomercewebsite.netlify.app",
-//       "https://simple-e-comerce-27271.web.app",
-//       "https://owwi-ecomerce-admin.netlify.app",
-//       "https://owwi-ecomerce.netlify.app",
-//     ],
-//     methods: ["POST", "PUT", "PATCH", "DELETE", "GET", "OPTIONS", "HEAD"],
-//     credentials: true,
-//   })
-// );
+// UNCOMMENT FOR DEPLOY
 
-// UNCOMMENT FOR DEVELOP
 app.use(
   cors({
-    origin: true,
+    origin: [
+      "https://simpleecomercewebsite.netlify.app",
+      "https://simple-e-comerce-27271.web.app",
+      "https://owwi-ecomerce-admin.netlify.app",
+      "https://owwi-ecomerce.netlify.app",
+    ],
+    methods: ["POST", "PUT", "PATCH", "DELETE", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })
 );
+
+// // UNCOMMENT FOR DEVELOP
+// app.use(
+//   cors({
+//     origin: true,
+//     credentials: true,
+//   })
+// );
 
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).array("files")
@@ -80,11 +82,11 @@ app.use(
     saveUninitialized: false,
     resave: false,
     store: store,
-    // cookie: {
-    //   // sameSite: "none", // UNCOMMENT FOR DEPLOY
-    //   // secure: true, // UNCOMMENT FOR DEPLOY
-    //   maxAge: 1000 * 60 * 60 * 24, // One day in milliseconds
-    // },
+    cookie: {
+      sameSite: "none", // UNCOMMENT FOR DEPLOY
+      secure: true, // UNCOMMENT FOR DEPLOY
+      maxAge: 1000 * 60 * 60 * 24, // One day in milliseconds
+    },
   })
 );
 
