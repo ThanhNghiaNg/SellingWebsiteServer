@@ -159,7 +159,7 @@ exports.getOrder = async (req, res, next) => {
   const user = await User.findById(req.session.user._id);
   const order = await Order.findById({ _id: id }).populate("items.productId");
 
-  if (user.role !== "admin" && user._id !== order.user.userId) {
+  if (user.role !== "admin" && user._id.toString() !== order.user.userId.toString()) {
     return res.status(400).send({
       message: "Wrong Order ID or User do not have right to access",
     });
