@@ -7,12 +7,12 @@ const { body } = require("express-validator/check");
 
 const route = express.Router();
 
-route.get("/user", isAuth, userController.getUserInfomation);
+route.get("/:id", isAuth, userController.getUserInfomation);
 
-route.put("/user", isAuth, userController.updateInformtaion);
+route.put("/:id", isAuth, userController.updateInformtaion);
 
 route.patch(
-  "/user/password",
+  "/:id/password/change",
   isAuth,
   [
     body("oldPassword").custom(async (value, { req }) => {
@@ -36,5 +36,7 @@ route.patch(
   ],
   userController.updatePassword
 );
+
+route.patch('/:id/account/block', isAuth, userController.blockAccount)
 
 module.exports = route;

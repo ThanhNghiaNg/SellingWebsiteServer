@@ -41,6 +41,7 @@ exports.postLogin = (req, res, next) => {
       res.status(500).send({ message: err.message });
     });
 };
+
 exports.postSignup = (req, res, next) => {
   const { email, password, fullName, phone } = req.body;
 
@@ -58,6 +59,7 @@ exports.postSignup = (req, res, next) => {
         phone,
         role: "customer",
         cart: { items: [], totalPrice: 0 },
+        isActive: true,
       });
       return newUser.save().then((user) => {
         return res.status(201).send({ message: "Sign-up Successfully!" });
@@ -67,6 +69,7 @@ exports.postSignup = (req, res, next) => {
       res.status(500).send({ message: err.message });
     });
 };
+
 exports.postLogout = (req, res, next) => {
   if (req.session) {
     req.session.destroy((err) => {

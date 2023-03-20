@@ -8,6 +8,7 @@ const userSchema = new Schema({
   phone: { type: String, require: true },
   address: { type: String, require: true },
   role: { type: String, require: true },
+  isActive: { type: Boolean, require: true },
   cart: {
     items: [
       {

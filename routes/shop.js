@@ -13,6 +13,8 @@ route.get("/products-home", shopController.getProductsOverall);
 
 route.get("/products", productController.getProducts);
 
+route.get("/search-products", productController.searchProducts);
+
 route.get("/product/:id", productController.getProduct);
 
 route.get("/product-related/:id", productController.getProductRelated);

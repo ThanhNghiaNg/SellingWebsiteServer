@@ -107,7 +107,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(shopRoutes);
-app.use(userRoutes);
+app.use('/user',userRoutes);
 app.use("/admin", adminRoutes);
 
 mongoose

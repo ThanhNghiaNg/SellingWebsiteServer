@@ -20,7 +20,8 @@ exports.getAllUser = async (req, res, next) => {
 
 exports.getUserInfomation = async (req, res, next) => {
   try {
-    const user = await User.findById(req.session.user._id);
+    const id = req.params.id;
+    const user = await User.findById(id);
     const { password, ...userinfo } = user._doc;
     return res.send(userinfo);
   } catch (err) {
@@ -30,8 +31,9 @@ exports.getUserInfomation = async (req, res, next) => {
 
 exports.updateInformtaion = async (req, res, next) => {
   try {
+    const id = req.params.id;
     const { email, fullName, phone, address } = req.body;
-    const user = await User.findByIdAndUpdate(req.session.user._id, {
+    const user = await User.findByIdAndUpdate(id, {
       ...req.body,
     });
     return res.send({ message: "Information Updated!" });
@@ -54,5 +56,34 @@ exports.updatePassword = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     return res.status(500).send({ message: "Failed to change password!" });
+  }
+};
+
+exports.deleteUser = async (req, res, next) => {
+  const id = req.params.id;
+  if (!id) {
+    return res.status(400).send({ message: "Invalid User Id!" });
+  }
+  try {
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+      return res.status(403).send({ message: "User is not exist!" });
+    }
+    return res.send({ message: "Deleted User!" });
+  } catch (err) {
+    return res.status(500).send({ message: "Failed to Delete" });
+  }
+};
+
+exports.blockAccount = async (req, res, next) => {
+  const id = req.params.id;
+  if (!id) {
+    return res.status(400).send({ message: "Invalid User Id!" });
+  }
+  try {
+    await User.findByIdAndUpdate(id, { $set: { isActive: false } });
+    return res.send({ message: "Blocked Account!" });
+  } catch (err) {
+    console.log(err);
   }
 };

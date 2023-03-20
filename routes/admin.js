@@ -11,8 +11,6 @@ const route = express.Router();
 
 route.get("/dashboard", isAuthAdmin, adminController.getDashBoard);
 
-route.get("/search-products", isAuthAdmin, adminController.searchProducts);
-
 // CREATE PRODUCT
 route.post(
   "/product",
@@ -64,5 +62,7 @@ route.get("/room/:id", isAuthConsultant, sessionController.getRoomAdmin);
 route.patch("/room/:id", isAuthConsultant, sessionController.pushMessageAdmin);
 
 route.get("/users", isAuthAdmin, userController.getAllUser);
+
+route.delete("/user/:id", isAuthAdmin, userController.deleteUser);
 
 module.exports = route;

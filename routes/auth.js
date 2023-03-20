@@ -15,7 +15,9 @@ route.post(
       .custom((value, { req }) => {
         return User.findOne({ email: value }).then((user) => {
           if (!user) {
-            throw new Error("User is not Signed up!");
+            throw "User is not Signed up!";
+          } else if (!user.isActive) {
+            throw "User account is blocked!";
           }
         });
       }),

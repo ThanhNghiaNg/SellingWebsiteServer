@@ -29,7 +29,7 @@ exports.getRoomAdmin = (req, res, next) => {
 
 exports.getRooms = (req, res, next) => {
   Session.find().then((sessions) => {
-    res.send(sessions);
+    res.send(sessions.reverse());
   });
 };
 

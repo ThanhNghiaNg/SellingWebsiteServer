@@ -1,9 +1,21 @@
 const Product = require("../models/Product");
 const { validationResult } = require("express-validator/check");
+const { getPagingResult } = require("../utils/global");
 exports.getProducts = (req, res, next) => {
   Product.find().then((products) => {
     return res.send(products);
   });
+};
+
+exports.searchProducts = (req, res, next) => {
+  const searchValue = req.query.query;
+  const page = req.query.page ? req.query.page : 1;
+  const pageSize = req.query.pageSize ? req.query.pageSize : 5;
+  Product.find({ name: { $regex: searchValue, $options: "i" } }).then(
+    (products) => {
+      return res.send(getPagingResult(products, page, pageSize));
+    }
+  );
 };
 
 exports.getProduct = (req, res, next) => {

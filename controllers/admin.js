@@ -32,12 +32,3 @@ exports.getDashBoard = (req, res, next) => {
       });
     });
 };
-
-exports.searchProducts = (req, res, next) => {
-  const searchValue = req.query.query;
-  Product.find({ name: { $regex: searchValue, $options: "i" } }).then(
-    (products) => {
-      return res.send(products);
-    }
-  );
-};
