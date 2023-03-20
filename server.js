@@ -13,7 +13,7 @@ const shopRoutes = require("./routes/shop");
 const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -108,7 +108,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(shopRoutes);
-app.use('/user',userRoutes);
+app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 
 mongoose
