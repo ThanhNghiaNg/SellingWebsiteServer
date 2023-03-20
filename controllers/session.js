@@ -8,6 +8,9 @@ exports.getRoom = (req, res, next) => {
     .sort({ "streamData.createAt": 1 })
     .populate({ path: "streamData.user", select: "role" })
     .then((session) => {
+      if (!session) {
+        return res.status(400).send({ message: "Session is not exist!" });
+      }
       if (
         session.customerCreated.toString() === req.session.user._id.toString()
       ) {

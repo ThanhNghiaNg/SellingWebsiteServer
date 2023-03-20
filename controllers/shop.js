@@ -5,7 +5,7 @@ const { validationResult } = require("express-validator/check");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
-const { generateOrderMail } = require("../utils/global");
+const { generateOrderMail, getPagingResult } = require("../utils/global");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -119,7 +119,11 @@ exports.placeOrder = (req, res, next) => {
               from: "nguoidung9994@gmail.com",
               to: user.email,
               subject: "Successfully Order",
-              html: generateOrderMail(newOrder.user, productInfo, newOrder.totalPrice),
+              html: generateOrderMail(
+                newOrder.user,
+                productInfo,
+                newOrder.totalPrice
+              ),
             },
             (error, info) => {
               if (error) {
@@ -141,10 +145,12 @@ exports.placeOrder = (req, res, next) => {
 };
 
 exports.getOrderHistory = (req, res, next) => {
+  const page = req.query.page ? req.query.page : 1;
+  const pageSize = req.query.pageSize ? req.query.pageSize : 5;
   Order.find({ "user.userId": req.user._id })
     .sort({ createAt: -1 })
     .then((orders) => {
-      return res.send(orders);
+      return res.send(getPagingResult(orders, page, pageSize));
     });
 };
 
