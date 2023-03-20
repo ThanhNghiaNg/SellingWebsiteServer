@@ -49,8 +49,7 @@ app.use(express.json());
 app.use(express.static(__dirname));
 app.set("trust proxy", 1);
 
-// UNCOMMENT FOR DEPLOY
-
+//// UNCOMMENT FOR DEPLOY
 app.use(
   cors({
     origin: [

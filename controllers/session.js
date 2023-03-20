@@ -29,7 +29,8 @@ exports.getRoomAdmin = (req, res, next) => {
 
 exports.getRooms = (req, res, next) => {
   Session.find().then((sessions) => {
-    res.send(sessions.reverse());
+    const sessionIds = sessions.map((session) => session._id);
+    return res.send(sessionIds.reverse());
   });
 };
 
@@ -47,6 +48,10 @@ exports.createRoomChat = (req, res, next) => {
         Session.findById(result._id)
           .populate({ path: "streamData.user", select: "role" })
           .then((session) => {
+            io.getIO().emit("onRoom", {
+              action: "new",
+              id: result._id,
+            });
             io.getIO().emit("onChat", { action: "push", session: session });
             return res.send({
               message: "Created Room!",
