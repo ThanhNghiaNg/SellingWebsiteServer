@@ -154,16 +154,16 @@ exports.getOrderHistory = (req, res, next) => {
     });
 };
 
-exports.getOrder = (req, res, next) => {
+exports.getOrder = async (req, res, next) => {
   const id = req.params.id;
-  Order.find({ "user.userId": req.user._id, _id: id })
-    .populate("items.productId")
-    .then((orders) => {
-      if (!orders[0]) {
-        return res.status(400).send({
-          message: "Wrong Order ID or User do not have right to access",
-        });
-      }
-      return res.send(orders[0]);
+  const user = await User.findById(req.session.user._id);
+  const order = await Order.findById({ _id: id }).populate("items.productId");
+
+  if (user.role !== "admin" && user._id !== order.user.userId) {
+    return res.status(400).send({
+      message: "Wrong Order ID or User do not have right to access",
     });
+  } else {
+    return res.send(order);
+  }
 };
