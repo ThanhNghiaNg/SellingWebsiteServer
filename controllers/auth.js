@@ -6,7 +6,7 @@ exports.getAuthenticated = (req, res, next) => {
   if (!req.session.isLoggedIn) {
     return res.send({ isLoggedIn: false });
   } else {
-    return res.send({ isLoggedIn: true, isAdmin: req.session.user.isAdmin });
+    return res.send({ isLoggedIn: true, isAdmin: req.session.user.role === "admin" });
   }
 };
 
